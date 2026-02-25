@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Demo Repo — Index</title>
+    <style>
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --text: #e6eef8;
+            --accent: #4f46e5;
+        }
+        * { box-sizing: border-box; }
+        html,body { height:100%; margin:0; font-family: Inter, system-ui, sans-serif; background:linear-gradient(180deg,#071027 0%,var(--bg) 100%); color:var(--text); }
+        .wrap { max-width:900px; margin:48px auto; padding:24px; }
+        header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; }
+        h1 { font-size:1.25rem; margin:0; letter-spacing:0.2px; }
+        nav a { color:var(--text); text-decoration:none; margin-left:12px; opacity:0.85; font-size:0.95rem; }
+        .card { background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); padding:18px; border-radius:12px; }
+        .grid { display:grid; grid-template-columns:1fr 280px; gap:18px; margin-top:16px; }
+        button { background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:600; }
+        .muted { color: #9fb0d9; font-size:0.9rem; }
+        pre { background:rgba(255,255,255,0.02); padding:12px; border-radius:8px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:0.9rem; }
+        footer { margin-top:28px; color: #8ea1c9; font-size:0.85rem; text-align:center; }
+        @media (max-width:820px){ .grid { grid-template-columns:1fr; } header{flex-direction:column;align-items:flex-start;gap:8px;} }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div>
+                <h1>Demo Repo</h1>
+                <div class="muted">A minimal starter index.html</div>
+            </div>
+            <nav>
+                <a href="#" id="btn-sample">Sample</a>
+                <a href="#" id="btn-toggle">Toggle Theme</a>
+            </nav>
+        </header>
+
+        <section class="grid">
+            <div class="card">
+                <h2 style="margin-top:0">Interactive demo</h2>
+                <p class="muted">Click the buttons to run small JavaScript actions.</p>
+                <div style="display:flex;gap:8px;margin-top:12px;">
+                    <button id="alertBtn">Show Alert</button>
+                    <button id="timeBtn">Show Time</button>
+                </div>
+
+                <h3 style="margin-top:16px">Example code</h3>
+                <pre>&lt;button id="timeBtn"&gt;Show Time&lt;/button&gt;</pre>
+            </div>
+
+            <aside class="card">
+                <h3 style="margin-top:0">Status</h3>
+                <p id="status" class="muted">Ready</p>
+                <hr style="border:none;height:1px;background:rgba(255,255,255,0.03);margin:12px 0;">
+                <strong>Quick tips</strong>
+                <ul style="padding-left:18px;margin:8px 0 0 0;color:var(--text);">
+                    <li>Edit this file in your editor.</li>
+                    <li>Open in browser to preview changes.</li>
+                </ul>
+            </aside>
+        </section>
+
+        <footer>
+            Built with a tiny HTML starter — modify as needed.
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('alertBtn').addEventListener('click', () => {
+            alert('Hello from demo repo!');
+            document.getElementById('status').textContent = 'Alert shown';
+        });
+
+        document.getElementById('timeBtn').addEventListener('click', () => {
+            const now = new Date().toLocaleTimeString();
+            document.getElementById('status').textContent = 'Time: ' + now;
+            navigator.clipboard?.writeText(now).catch(()=>{});
+        });
+
+        const root = document.documentElement;
+        let dark = true;
+        document.getElementById('btn-toggle').addEventListener('click', (e) => {
+            e.preventDefault();
+            if(dark){
+                root.style.setProperty('--bg','#ffffff');
+                root.style.setProperty('--card','#f7f9fc');
+                root.style.setProperty('--text','#0b1220');
+                root.style.setProperty('--accent','#2563eb');
+            } else {
+                root.style.setProperty('--bg','#0f1724');
+                root.style.setProperty('--card','#0b1220');
+                root.style.setProperty('--text','#e6eef8');
+                root.style.setProperty('--accent','#4f46e5');
+            }
+            dark = !dark;
+            document.getElementById('status').textContent = dark ? 'Dark theme' : 'Light theme';
+        });
+
+        document.getElementById('btn-sample').addEventListener('click', (e) => {
+            e.preventDefault();
+            const sample = document.createElement('div');
+            sample.textContent = 'Sample link clicked';
+            sample.style.marginTop = '12px';
+            sample.style.color = 'var(--accent)';
+            document.querySelector('.card').appendChild(sample);
+            document.getElementById('status').textContent = 'Sample added';
+        });
+    </script>
+</body>
+</html>
